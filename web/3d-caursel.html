@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>3D - 轮播图</title>
+	<style>
+		.tilt-layer {
+			transform-style: preserve-3d;
+			transform: rotateX(-9deg);
+		}
+
+		.container {
+			width: 120px;
+			height: 40px;
+			transform-style: preserve-3d;
+			position: relative;
+			left: calc(50% - 60px);
+			top: 500px;
+			transform: rotateY(0deg);
+			transition: all .6s;
+		}
+
+		.card {
+			width: 120px;
+			position: absolute;
+			height: 40px;
+			background-color: blue;
+			border: 1px solid black;
+			color: #fff;
+			text-align: center;
+			line-height: 40px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="tilt-layer">
+		<div class="container"></div>
+	</div>
+
+	<script>
+		const __DEV__ = false;
+		const container = document.querySelector('.container');
+		const deg = 20;
+		const size = 360 / deg;
+		const frag = document.createDocumentFragment();
+		const items = Array.from({ length: size }, (_, i) => {
+			const div = document.createElement('div');
+			div.classList.add('card');
+			div.innerHTML = i;
+			div.style.transform = `rotateY(${i * deg}deg) translateZ(400px)`;
+			frag.appendChild(div);
+			return div;
+		});
+		container.appendChild(frag);
+		let current = 1;
+		let count = 2;
+		const delay = 5000;
+		setInterval(() => {
+			animation();
+		}, delay);
+		animation();
+
+		function animation() {
+			current = (current + 1) % size;
+			let totalDeg = -1 * count * deg;
+			container.style.transform = `rotateY(${totalDeg}deg)`;
+			count += 1;
+			const cardList = getDisplayCard(current);
+			cardList.sort((a, b) => a - b);
+			items.forEach((v, i) => {
+				v.style.opacity = 0;
+				v.style.backgroundColor = 'blue';
+				if (cardList.includes(i)) {
+					v.style.opacity = 1;
+				}
+				if (i === current) {
+					v.style.backgroundColor = 'red';
+				}
+			})
+
+			if (__DEV__) {
+				console.log({
+					size,
+					current,
+					cardList,
+					totalDeg,
+					// container,
+				})
+			}
+		}
+		function getDisplayCard(current, num = 5) {
+			const pos = Math.trunc(num / 2);
+			const res = [current % size];
+			for (let i = 1; i <= pos; i++) {
+				const cur1 = current - i < 0 ? current - i + size : (current - i) % size;
+				const cur2 = current + i > size ? current + i - size : (current + i) % size;
+				res.push(cur1, cur2);
+			}
+			return res;
+		}
+	</script>
+</body>
+
+</html>
