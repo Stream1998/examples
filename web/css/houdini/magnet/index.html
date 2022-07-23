@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .magnet {
+      width: 600px;
+      height: 600px;
+      --magnet-color: #9966cc;
+      --magnet-size: 4; 
+      --magnet-gap: 40;
+      --magnet-radius: 160;
+      background-image: paint(magnet-matrix);
+    }
+  </style>
+</head>
+<body>
+  <div class="magnet"></div>
+  <script>
+    // 加载 painter
+    CSS.paintWorklet.addModule('./magnet-matrix.js');
+
+    const element = document.querySelector('.magnet');
+    element.addEventListener('mouseenter', function (e) {
+      this.style.setProperty('--mouse-x', e.clientX);
+      this.style.setProperty('--mouse-y', e.clientY);
+    })
+    element.addEventListener('mousemove', function (e) {
+      this.style.setProperty('--mouse-x', e.clientX);
+      this.style.setProperty('--mouse-y', e.clientY);
+    })
+  </script>
+</body>
+</html>

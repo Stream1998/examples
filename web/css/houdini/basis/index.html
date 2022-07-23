@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      width: 600px;
+      height: 600px;
+      --backgroundColor: #2144cc;
+      --backgroundMargin: 60;
+      background-image: paint(custom-background);
+    }
+  </style>
+</head>
+<body>
+  <div></div>
+  <script>
+    // 加载 painter
+    CSS.paintWorklet.addModule('./custom-background.js');
+    // 另一种方式： 内容加载
+    /*
+    CSS.paintWorklet.addModule(`data:application/javascript;charset=utf8,${encodeURIComponent(`
+      class CustomBackgroundPainter {
+        paint(ctx, size) {
+          const color = '#9966cc';
+          const margin = 30;
+          ctx.fillStyle = color;
+          ctx.rect(margin, margin, size.width - margin * 2, size.height - margin * 2);
+          ctx.fill();
+        }
+      }
+      registerPaint('custom-background', CustomBackgroundPainter);
+    `)}`);
+    */
+  </script>
+</body>
+</html>

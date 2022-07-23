@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>水滴</title>
+</head>
+<body>
+  <svg width="1000" height="200">
+    <defs>
+      <g id="drip">
+        <circle r="4" fill="rgba(5, 194, 243, 1)"></circle>
+        <path d="M 0 4 L -15 0 L 0 -4" fill="rgba(5, 194, 243, 1)"/>
+      </g>
+    </defs>
+
+    <path id="path-1" d="M 50,50L 500,50" stroke="rgba(73, 149, 255,1)" fill="transparent" strokeWidth="5"></path>
+
+    <use xlink:href="#drip">
+      <animateMotion dur="2s" rotate="auto" repeatCount="indefinite">
+          <mpath xlink:href="#path-1"></mpath>
+      </animateMotion>
+    </use>
+  </svg> 
+</body>
+</html>
